@@ -1,0 +1,151 @@
+name: CimbarApp
+options:
+  bundleIdPrefix: dev.cimbar
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+  createIntermediateGroups: false
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Automatic
+
+# ─────────────────────────────────────────────────────────────
+# Shared C++ build settings
+# ─────────────────────────────────────────────────────────────
+  cppSettings: &cppSettings
+    CLANG_CXX_LANGUAGE_STANDARD: "c++17"
+    CLANG_CXX_LIBRARY: "libc++"
+    GCC_C_LANGUAGE_STANDARD: "c99"
+    GCC_WARN_ABOUT_RETURN_TYPE: YES
+    GCC_WARN_UNUSED_VARIABLE: YES
+    MTL_ENABLE_DEBUG_INFO: NO
+    GCC_PREPROCESSOR_DEFINITIONS:
+      - "IOS=1"
+      - "ZSTD_STATIC_LINKING_ONLY=1"
+      - "LIBCIMBAR_PROJECT_ROOT=\"$(SRCROOT)/libcimbar\""
+    HEADER_SEARCH_PATHS:
+      - "$(SRCROOT)/libcimbar/src/lib"
+      - "$(SRCROOT)/libcimbar/src/third_party_lib"
+      - "$(SRCROOT)/libcimbar/src/third_party_lib/libcorrect/include"
+      - "$(SRCROOT)/libcimbar/src/third_party_lib/wirehair/include"
+      - "$(SRCROOT)/libcimbar/src/third_party_lib/zstd"
+      - "$(SRCROOT)/opencv2.framework/Headers"
+
+# ─────────────────────────────────────────────────────────────
+# Targets
+# ─────────────────────────────────────────────────────────────
+targets:
+
+  # ── C++ static library ─────────────────────────────────────
+  cimbar-core:
+    type: library.static
+    platform: iOS
+    sources:
+      # ── C API wrapper (pure C++, no ObjC) ─
+      - path: core/cimbar_c.cpp
+        group: core
+      - path: core/cimbar_c.h
+        group: core
+        buildPhase: none
+      # encoder lib (header-only: Decoder pipeline with ECC + interleave)
+      - path: libcimbar/src/lib/encoder
+        group: libcimbar/encoder
+        buildPhase: none
+      # null_stream (needed by Decoder.h)
+      - path: libcimbar/src/lib/util/null_stream.h
+        group: libcimbar/util
+        buildPhase: none
+      # ── Compiled C++ sources (.cpp only — headers via HEADER_SEARCH_PATHS) ─
+      - path: libcimbar/src/lib/cimb_translator
+        includes:
+          - "*.cpp"
+        group: libcimbar/cimb_translator
+      - path: libcimbar/src/lib/extractor
+        includes:
+          - "*.cpp"
+        group: libcimbar/extractor
+      - path: libcimbar/src/third_party_lib/wirehair
+        includes:
+          - "*.cpp"
+        excludes:
+          - "**/test/**"
+          - "**/tables/**"
+        group: third_party/wirehair
+      - path: libcimbar/src/third_party_lib/libcorrect/src
+        includes:
+          - "**/*.c"
+        excludes:
+          - "**/sse/**"
+          - "**/test*/**"
+          - "**/tools/**"
+          - "**/bench*/**"
+          - "**/util/**"
+        group: third_party/libcorrect
+      - path: libcimbar/src/third_party_lib/zstd/common
+        includes:
+          - "*.c"
+        group: third_party/zstd/common
+      - path: libcimbar/src/third_party_lib/zstd/decompress
+        includes:
+          - "*.c"
+        group: third_party/zstd/decompress
+      - path: libcimbar/src/third_party_lib/zstd/compress
+        includes:
+          - "*.c"
+        group: third_party/zstd/compress
+    settings:
+      base:
+        <<: *cppSettings
+        PRODUCT_NAME: cimbar_core
+        SKIP_INSTALL: YES
+        ONLY_ACTIVE_ARCH: YES
+        CLANG_ENABLE_OBJC_ARC: YES
+        # OpenCV & system frameworks
+        OTHER_LDFLAGS:
+          - "-framework opencv2"
+          - "-framework Accelerate"
+        FRAMEWORK_SEARCH_PATHS:
+          - "$(SRCROOT)"
+
+  # ── iOS App ────────────────────────────────────────────────
+  CimbarApp:
+    type: application
+    platform: iOS
+    productName: LensDrop
+    sources:
+      - path: ios
+        type: group
+    dependencies:
+      - target: cimbar-core
+    settings:
+      base:
+        INFOPLIST_FILE: ios/CimbarApp-Info.plist
+        CLANG_CXX_LANGUAGE_STANDARD: "c++17"
+        CLANG_CXX_LIBRARY: "libc++"
+        PRODUCT_BUNDLE_IDENTIFIER: dev.cimbar.ios
+        PRODUCT_NAME: LensDrop
+        SWIFT_OBJC_INTEROP_MODE: "objcxx"
+        SWIFT_OBJC_BRIDGING_HEADER: "ios/Bridge/CimbarApp-Bridging-Header.h"
+        HEADER_SEARCH_PATHS:
+          - "$(SRCROOT)/core"
+          - "$(SRCROOT)/libcimbar/src/lib"
+          - "$(SRCROOT)/libcimbar/src/third_party_lib"
+          - "$(SRCROOT)/libcimbar/src/third_party_lib/libcorrect/include"
+          - "$(SRCROOT)/libcimbar/src/third_party_lib/wirehair/include"
+          - "$(SRCROOT)/libcimbar/src/third_party_lib/zstd"
+          - "$(SRCROOT)/opencv2.framework/Headers"
+        FRAMEWORK_SEARCH_PATHS:
+          - "$(SRCROOT)"
+        OTHER_LDFLAGS:
+          - "-framework opencv2"
+          - "-framework Accelerate"
+          - "-framework AVFoundation"
+          - "-framework VideoToolbox"
+        GCC_PREPROCESSOR_DEFINITIONS:
+          - "IOS=1"
+          - "LIBCIMBAR_PROJECT_ROOT=\"$(SRCROOT)/libcimbar\""
