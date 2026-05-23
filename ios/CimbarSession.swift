@@ -1,7 +1,7 @@
 import SwiftUI
 import Combine
-import CoreMedia
-import AVFoundation
+@preconcurrency import CoreMedia
+@preconcurrency import AVFoundation
 
 // MARK: - Decode State
 
@@ -27,6 +27,10 @@ enum DecodeState: Equatable {
     }
 }
 
+private struct PendingFrame: @unchecked Sendable {
+    let sampleBuffer: CMSampleBuffer
+}
+
 // MARK: - CimbarSession
 
 @MainActor
@@ -35,13 +39,13 @@ final class CimbarSession: ObservableObject {
     @Published var state: DecodeState = .idle
     @Published var framesExtracted: Int = 0
 
-    private let bridge: CimbarDecoderBridge
+    nonisolated(unsafe) private let bridge: CimbarDecoderBridge
     private let decodeQueue = DispatchQueue(label: "cimbar.decode", qos: .userInitiated)
     private var framesReceived: Int = 0
     private var startTime: Date?
-
-    nonisolated(unsafe) private var isProcessing = false
-    nonisolated(unsafe) private var frameSkipCounter: UInt8 = 0
+    private var sessionGeneration: UInt = 0
+    private var isProcessing = false
+    private var frameSkipCounter: UInt8 = 0
 
     nonisolated init() {
         bridge = CimbarDecoderBridge(
@@ -56,8 +60,10 @@ final class CimbarSession: ObservableObject {
     // MARK: - Camera Control
 
     func startScanning() {
+        sessionGeneration &+= 1
         decodeQueue.async { [weak self] in
-            self?.bridge.reset()
+            guard let self else { return }
+            self.bridge.reset()
         }
         state = .scanning
         framesExtracted = 0
@@ -66,31 +72,53 @@ final class CimbarSession: ObservableObject {
     }
 
     func stopScanning() {
+        sessionGeneration &+= 1
         state = .idle
         decodeQueue.async { [weak self] in
-            self?.bridge.reset()
+            guard let self else { return }
+            self.bridge.reset()
         }
         framesExtracted = 0
         framesReceived = 0
         startTime = nil
     }
 
+    func stopActiveScanning() {
+        switch state {
+        case .scanning, .decoding:
+            stopScanning()
+        case .idle, .complete, .error:
+            break
+        }
+    }
+
     // MARK: - Frame Processing
 
     nonisolated func processFrame(_ sampleBuffer: CMSampleBuffer) {
+        Task { @MainActor [weak self] in
+            self?.enqueueFrame(sampleBuffer)
+        }
+    }
+
+    private func enqueueFrame(_ sampleBuffer: CMSampleBuffer) {
+        guard isActivelyScanning else { return }
         if isProcessing { return }
         frameSkipCounter ^= 1
         if frameSkipCounter == 0 { return }
 
+        let generation = sessionGeneration
+        let frame = PendingFrame(sampleBuffer: sampleBuffer)
         isProcessing = true
         decodeQueue.async { [weak self] in
-            defer { self?.isProcessing = false }
             guard let self else { return }
 
-            let result = self.bridge.processFrame(sampleBuffer)
+            let result = self.bridge.processFrame(frame.sampleBuffer)
 
             Task { @MainActor [weak self] in
                 guard let self else { return }
+                self.isProcessing = false
+                guard generation == self.sessionGeneration else { return }
+                guard self.isActivelyScanning else { return }
                 guard let result else { return }
 
                 self.framesExtracted += 1
@@ -113,10 +141,16 @@ final class CimbarSession: ObservableObject {
         }
     }
 
+    private var isActivelyScanning: Bool {
+        switch state {
+        case .scanning, .decoding:
+            return true
+        case .idle, .complete, .error:
+            return false
+        }
+    }
+
     func reset() {
         stopScanning()
-        decodeQueue.async { [weak self] in
-            self?.bridge.reset()
-        }
     }
 }

@@ -1,0 +1,51 @@
+"tab.scan" = "Scan";
+"tab.settings" = "Settings";
+
+"settings.title" = "Settings";
+"settings.language" = "Language";
+"settings.language.selection" = "Language";
+"settings.sender" = "Sender";
+"settings.sender.description" = "On a computer, open the single-file sender page in a modern browser, choose a file, then point LensDrop at the displayed code.";
+"settings.sender.export" = "Export Offline Sender HTML";
+"settings.sender.latest" = "Get Latest Sender from libcimbar";
+"settings.sender.bundled" = "Bundled sender: official libcimbar v0.6.5.";
+"settings.sender.unavailable" = "Sender File Unavailable";
+"settings.sender.notFound" = "The bundled sender HTML could not be found.";
+"settings.sender.loadFailed" = "The bundled sender HTML could not be loaded.";
+"settings.about" = "About";
+"settings.about.summary" = "The computer sender displays a file as animated color icon matrix barcodes. LensDrop scans them through the camera and reconstructs the file locally, without transferring it over a network.";
+"settings.about.version" = "Version";
+"settings.about.license" = "Includes the official libcimbar v0.6.5 sender. libcimbar is distributed under MPL 2.0.";
+
+"privacy.title" = "Privacy Policy";
+"privacy.introduction" = "LensDrop is designed for offline optical file transfer. This policy explains how the app handles information on your device.";
+"privacy.collection.title" = "Personal Information";
+"privacy.collection.body" = "LensDrop does not collect, sell, or upload personal information.";
+"privacy.camera.title" = "Camera";
+"privacy.camera.body" = "Camera access is used only on your device to scan cimbar images and reconstruct files. LensDrop does not transmit camera frames to a server.";
+"privacy.files.title" = "Received Files";
+"privacy.files.body" = "Completed received files are available for you to export. They are written only to the location you select through the system file interface.";
+"privacy.preferences.title" = "Preferences";
+"privacy.preferences.body" = "Your language selection is stored locally on your device.";
+"privacy.external.title" = "External Website";
+"privacy.external.body" = "If you choose Get Latest Sender from libcimbar, LensDrop opens an external GitHub download page. That website is governed by its own privacy practices.";
+"privacy.offlineSender.title" = "Offline Sender";
+"privacy.offlineSender.body" = "The bundled sender HTML can be exported by you and opened locally in a web browser for offline use. LensDrop itself does not run that page or receive the sender's selected file.";
+
+"scan.stop" = "Stop";
+"scan.percent" = "%d%%";
+"scan.idle.instructions" = "Point camera at a cimbar code\non your computer screen";
+"scan.start" = "Start Scanning";
+"scan.decoding" = "Decoding";
+"scan.complete.percent" = "%d%% complete";
+"scan.frame.progress" = "%d chunks · %d frames";
+"scan.file.received" = "File Received";
+"scan.save" = "Save to Files";
+"scan.again" = "Scan Again";
+"scan.error" = "Decode Error";
+"scan.retry" = "Retry";
+
+"files.empty" = "No files received yet";
+"files.title" = "Received Files";
+
+"common.ok" = "OK";

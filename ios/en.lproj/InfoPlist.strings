@@ -1,0 +1,2 @@
+"CFBundleDisplayName" = "LensDrop";
+"NSCameraUsageDescription" = "LensDrop uses the camera to receive files from optical barcodes on a screen. No data is sent over the network.";

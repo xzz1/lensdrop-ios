@@ -1,0 +1,51 @@
+"tab.scan" = "扫描";
+"tab.settings" = "设置";
+
+"settings.title" = "设置";
+"settings.language" = "语言";
+"settings.language.selection" = "界面语言";
+"settings.sender" = "发送端";
+"settings.sender.description" = "在电脑浏览器中打开单文件发送网页，选择文件后，将 LensDrop 对准屏幕上显示的码图进行扫描。";
+"settings.sender.export" = "导出离线发送端 HTML";
+"settings.sender.latest" = "从 libcimbar 获取最新发送端";
+"settings.sender.bundled" = "内置发送端：官方 libcimbar v0.6.5。";
+"settings.sender.unavailable" = "无法使用发送端文件";
+"settings.sender.notFound" = "未找到内置的发送端 HTML 文件。";
+"settings.sender.loadFailed" = "无法加载内置的发送端 HTML 文件。";
+"settings.about" = "关于";
+"settings.about.summary" = "电脑端发送页将文件显示为动态彩色图标矩阵条形码。LensDrop 通过相机扫描并在设备本地恢复文件，无需通过网络传输文件。";
+"settings.about.version" = "版本";
+"settings.about.license" = "包含官方 libcimbar v0.6.5 发送端。libcimbar 依据 MPL 2.0 分发。";
+
+"privacy.title" = "隐私政策";
+"privacy.introduction" = "LensDrop 专为离线光学文件传输而设计。本政策说明 App 如何在你的设备上处理信息。";
+"privacy.collection.title" = "个人信息";
+"privacy.collection.body" = "LensDrop 不收集、出售或上传个人信息。";
+"privacy.camera.title" = "相机";
+"privacy.camera.body" = "相机权限仅用于在你的设备上扫描 cimbar 图像并恢复文件。LensDrop 不会将相机画面发送到服务器。";
+"privacy.files.title" = "接收的文件";
+"privacy.files.body" = "完整接收的文件可供你主动导出；文件只会写入你通过系统文件界面选择的位置。";
+"privacy.preferences.title" = "偏好设置";
+"privacy.preferences.body" = "你的语言选择仅保存在设备本地。";
+"privacy.external.title" = "外部网站";
+"privacy.external.body" = "当你选择“从 libcimbar 获取最新发送端”时，LensDrop 会打开外部 GitHub 下载页面。该网站适用其自身的隐私规则。";
+"privacy.offlineSender.title" = "离线发送端";
+"privacy.offlineSender.body" = "你可以导出 App 内置的发送端 HTML 文件，并在浏览器中本地离线使用。LensDrop 本身不会运行该页面或接收发送端所选择的文件。";
+
+"scan.stop" = "停止";
+"scan.percent" = "%d%%";
+"scan.idle.instructions" = "将相机对准电脑屏幕上的\ncimbar 码";
+"scan.start" = "开始扫描";
+"scan.decoding" = "正在解码";
+"scan.complete.percent" = "已完成 %d%%";
+"scan.frame.progress" = "%d 个数据块 · %d 帧";
+"scan.file.received" = "文件已接收";
+"scan.save" = "保存到文件";
+"scan.again" = "再次扫描";
+"scan.error" = "解码错误";
+"scan.retry" = "重试";
+
+"files.empty" = "尚未接收文件";
+"files.title" = "已接收文件";
+
+"common.ok" = "好";

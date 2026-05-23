@@ -127,7 +127,7 @@ targets:
         INFOPLIST_FILE: ios/CimbarApp-Info.plist
         CLANG_CXX_LANGUAGE_STANDARD: "c++17"
         CLANG_CXX_LIBRARY: "libc++"
-        PRODUCT_BUNDLE_IDENTIFIER: dev.cimbar.ios
+        PRODUCT_BUNDLE_IDENTIFIER: com.zzx.lensdrop
         PRODUCT_NAME: LensDrop
         SWIFT_OBJC_INTEROP_MODE: "objcxx"
         SWIFT_OBJC_BRIDGING_HEADER: "ios/Bridge/CimbarApp-Bridging-Header.h"

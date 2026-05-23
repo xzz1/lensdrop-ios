@@ -1,0 +1,2 @@
+"CFBundleDisplayName" = "LensDrop";
+"NSCameraUsageDescription" = "LensDrop 使用相机从屏幕上的光学条码接收文件，不会通过网络发送任何数据。";

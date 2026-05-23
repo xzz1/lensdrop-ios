@@ -12,8 +12,12 @@ struct ScanView: View {
 
     var body: some View {
         ZStack {
+            Color.black
+                .ignoresSafeArea()
+
             CameraPreview(session: session)
                 .ignoresSafeArea()
+                .scaleEffect(blurredBg ? 1.08 : 1)
                 .compositingGroup()
                 .blur(radius: blurredBg ? 20 : 0)
                 .animation(.easeInOut(duration: 0.3), value: blurredBg)
@@ -54,6 +58,7 @@ struct ScanView: View {
 
 private struct BottomBar: View {
     @ObservedObject var session: CimbarSession
+    @Environment(\.appLanguage) private var language
 
     var body: some View {
         HStack {
@@ -64,7 +69,7 @@ private struct BottomBar: View {
                     ProgressView(value: Double(progress))
                         .tint(.green)
                         .frame(width: 120)
-                    Text("\(Int(progress * 100))%")
+                    Text(language.format("scan.percent", Int(progress * 100)))
                         .font(.caption2.monospacedDigit())
                         .foregroundColor(.green)
                 }
@@ -80,7 +85,7 @@ private struct BottomBar: View {
                 Button(action: { session.stopScanning() }) {
                     HStack(spacing: 4) {
                         Image(systemName: "stop.fill")
-                        Text("Stop")
+                        Text(language.text("scan.stop"))
                     }
                     .font(.caption.bold())
                 }
@@ -100,6 +105,7 @@ private struct BottomBar: View {
 
 private struct IdleOverlay: View {
     let onStart: () -> Void
+    @Environment(\.appLanguage) private var language
 
     var body: some View {
         VStack(spacing: 24) {
@@ -107,13 +113,13 @@ private struct IdleOverlay: View {
                 .font(.system(size: 48))
                 .foregroundColor(.white.opacity(0.6))
 
-            Text("Point camera at a cimbar code\non your computer screen")
+            Text(language.text("scan.idle.instructions"))
                 .font(.body)
                 .foregroundColor(.white.opacity(0.7))
                 .multilineTextAlignment(.center)
 
             Button(action: onStart) {
-                Label("Start Scanning", systemImage: "play.fill")
+                Label(language.text("scan.start"), systemImage: "play.fill")
                     .font(.title3.bold())
                     .frame(maxWidth: .infinity)
             }
@@ -130,14 +136,15 @@ private struct DecodingHUD: View {
     let progress: Float
     let receivedFrames: Int
     let totalExtracted: Int
+    @Environment(\.appLanguage) private var language
 
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 6) {
-                Text("Decoding")
+                Text(language.text("scan.decoding"))
                     .font(.title3.bold())
                     .foregroundColor(.white)
-                Text("\(Int(progress * 100))% complete")
+                Text(language.format("scan.complete.percent", Int(progress * 100)))
                     .font(.caption.monospacedDigit())
                     .foregroundColor(.white.opacity(0.7))
             }
@@ -146,7 +153,7 @@ private struct DecodingHUD: View {
                 .tint(.green)
                 .padding(.horizontal, 60)
 
-            Text("\(receivedFrames) chunks · \(totalExtracted) frames")
+            Text(language.format("scan.frame.progress", receivedFrames, totalExtracted))
                 .font(.caption2.monospacedDigit())
                 .foregroundColor(.white.opacity(0.6))
         }
@@ -166,6 +173,7 @@ private struct CompleteSheet: View {
     let onReset: () -> Void
 
     @State private var showSave = false
+    @Environment(\.appLanguage) private var language
 
     var body: some View {
         VStack(spacing: 20) {
@@ -173,7 +181,7 @@ private struct CompleteSheet: View {
                 .font(.system(size: 64))
                 .foregroundColor(.green)
 
-            Text("File Received")
+            Text(language.text("scan.file.received"))
                 .font(.title.bold())
                 .foregroundColor(.white)
 
@@ -191,14 +199,14 @@ private struct CompleteSheet: View {
 
             VStack(spacing: 10) {
                 Button(action: { showSave = true }) {
-                    Label("Save to Files", systemImage: "folder.badge.plus")
+                    Label(language.text("scan.save"), systemImage: "folder.badge.plus")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
 
                 Button(action: onReset) {
-                    Label("Scan Again", systemImage: "arrow.counterclockwise")
+                    Label(language.text("scan.again"), systemImage: "arrow.counterclockwise")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
@@ -221,19 +229,20 @@ private struct CompleteSheet: View {
 private struct ErrorHUD: View {
     let message: String
     let onReset: () -> Void
+    @Environment(\.appLanguage) private var language
 
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.orange)
-            Text("Decode Error")
+            Text(language.text("scan.error"))
                 .font(.title3.bold())
                 .foregroundColor(.white)
             Text(message)
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.7))
-            Button("Retry", action: onReset)
+            Button(language.text("scan.retry"), action: onReset)
                 .buttonStyle(.borderedProminent)
         }
         .padding(24)

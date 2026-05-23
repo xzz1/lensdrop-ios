@@ -11,6 +11,7 @@
 		01DCEA8CD8CB7E98A829B21D /* fse_compress.c in Sources */ = {isa = PBXBuildFile; fileRef = E14CEC6E7456055C1BF54867 /* fse_compress.c */; };
 		032C7491E7B84BB850C8E9F7 /* zstdmt_compress.c in Sources */ = {isa = PBXBuildFile; fileRef = BB4015CC431672D5E16A5E59 /* zstdmt_compress.c */; };
 		051DCFB1F15746FA61B8A603 /* CimbarSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01703928A0AD49EB854CC504 /* CimbarSession.swift */; };
+		07203DC4A6D444FDBBBFE701 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 914A4F2825311C421B834818 /* Localizable.strings */; };
 		091202EDC30B32AA1DD07852 /* zstd_compress_superblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 0227022AE8BEF90D833CE9B9 /* zstd_compress_superblock.c */; };
 		0EF4D7779A022741D7B9FA12 /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = A425D065EE33895530780250 /* decode.c */; };
 		0FC71FA9BB334C2940811629 /* AdjacentCellFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A768D082D9AA2CC341B305BB /* AdjacentCellFinder.cpp */; };
@@ -18,8 +19,10 @@
 		19809DB0E92AB36F507518FC /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDBF4ADF7BC58360AC46230 /* ScanView.swift */; };
 		1A3CD6D4EC04103E80C36524 /* error_buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C452E44BE99D78575EB8DE0E /* error_buffer.c */; };
 		1ED6F7F7F0F72E8E79052144 /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = 92202F64A76B7363C5105BAB /* debug.c */; };
+		2208402EA7520120C20D4986 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA0F723C06F2B79C9250EE /* Localization.swift */; };
 		291AE3EE35C4262B89E9F266 /* lookup.c in Sources */ = {isa = PBXBuildFile; fileRef = 54C287F86FD0AF1B55B40B3D /* lookup.c */; };
 		2C367181AAB03951BEF69E39 /* CimbDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EFEB1CAA9A20E985E69095 /* CimbDecoder.cpp */; };
+		3600E81AEF4D4A6BDA2F4C5C /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB30E39A86B3B3A1FA49A97 /* PrivacyPolicyView.swift */; };
 		366CF629B023F4E56D7A3ADD /* zstd_ddict.c in Sources */ = {isa = PBXBuildFile; fileRef = 753FA8D206EAFAA13C4B1196 /* zstd_ddict.c */; };
 		38F14D110F7DB57794F34506 /* metric.c in Sources */ = {isa = PBXBuildFile; fileRef = C93EE97D406C4CF3C56195E6 /* metric.c */; };
 		3AB19CD4DC503CDAC9FB2DDD /* zstd_compress_sequences.c in Sources */ = {isa = PBXBuildFile; fileRef = F8ABB62C295E5396201101F2 /* zstd_compress_sequences.c */; };
@@ -33,6 +36,7 @@
 		68931E8BADC077C3FF2D79ED /* huf_compress.c in Sources */ = {isa = PBXBuildFile; fileRef = E8995E10CBD290770026114A /* huf_compress.c */; };
 		6B79515B85612C281808DA52 /* convolutional.c in Sources */ = {isa = PBXBuildFile; fileRef = 654343463F1033D33F363D88 /* convolutional.c */; };
 		6C4EDC6073A93F472C577A88 /* error_private.c in Sources */ = {isa = PBXBuildFile; fileRef = E107437455DFC2818EDF58B3 /* error_private.c */; };
+		6ECD8D914A64F3E8D96589E2 /* libcimbar-MPL-2.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = F712226D198766BDFD2C22A7 /* libcimbar-MPL-2.0.txt */; };
 		72C6C78147F050284DBEA476 /* zstd_opt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B300E0754B7A7902C1C8963 /* zstd_opt.c */; };
 		74A6AF77EE72AE887CD06B46 /* hist.c in Sources */ = {isa = PBXBuildFile; fileRef = 8E4AB31D79A9330A72757E5B /* hist.c */; };
 		7CF48A8A004D201EB2145085 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F99D3777F406BBF749456 /* CameraPreview.swift */; };
@@ -55,6 +59,7 @@
 		B52DD3140B6C08427529B8F4 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 8025D7E90A6B8B4EC4DC1844 /* xxhash.c */; };
 		B53775AE7084FFC1B0037742 /* libcimbar-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A59EEB95EF677CBCE95BCE /* libcimbar-core.a */; };
 		B8609E7678059FD0845C44BE /* zstd_compress.c in Sources */ = {isa = PBXBuildFile; fileRef = CD1F107537AFCD0609339E20 /* zstd_compress.c */; };
+		BA272589E77509561FE76BDB /* cimbar_js.html in Resources */ = {isa = PBXBuildFile; fileRef = 770C38BF482671B6408F6F1B /* cimbar_js.html */; };
 		BDC98E6A814B650654B75C12 /* CellPositions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1673DF47E60E9CEEF1E15577 /* CellPositions.cpp */; };
 		CD9CB48E14F002A57AD2B2E5 /* WirehairTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D2979580FBD60DFFBD2463E /* WirehairTools.cpp */; };
 		D20B6E0FCDE2226179101415 /* pool.c in Sources */ = {isa = PBXBuildFile; fileRef = F2370C0A8B98008B9E5FF1AC /* pool.c */; };
@@ -65,11 +70,13 @@
 		E3DE5D69F949F8C535B18640 /* FloodDecodePositions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 111F4D302AD119F07C0410C7 /* FloodDecodePositions.cpp */; };
 		E4887C2E7DA1AD9D49E621F7 /* bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 65A85E49C2D3CA01B4264045 /* bit.c */; };
 		E8FC4EF80757CE5161225DB4 /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = D7C09E830D02963BDA76C4D4 /* encode.c */; };
+		EB736CEA57D33A1023B59C2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCB95D16BBD132B590384E61 /* Assets.xcassets */; };
 		EC425FC824247D18D969C172 /* WirehairCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E0C1F1ADD2190DA07969CE /* WirehairCodec.cpp */; };
 		F50F4A4EDDE85B9EDFCD8C7D /* CimbarDecoderBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 693EDF0715FEB5F2524DBA19 /* CimbarDecoderBridge.mm */; };
 		F728499A85258E805DE950E1 /* history_buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 943269BBEAD53432D730A1CC /* history_buffer.c */; };
 		F767FF88901F4F79BEBF7218 /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 843493C1C36CC5C344CDB53B /* decode.c */; };
 		F83925FFDF6E9A4EE667741F /* zstd_lazy.c in Sources */ = {isa = PBXBuildFile; fileRef = A35A3A295E957AC4A1A2801F /* zstd_lazy.c */; };
+		F906ADE453A1450D61CBB053 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D88A47FEFF83B42ACA73AB20 /* InfoPlist.strings */; };
 		FA987F1D99214E8034D3CF3D /* reed-solomon.c in Sources */ = {isa = PBXBuildFile; fileRef = 004F51E9A5932AB6002DA99E /* reed-solomon.c */; };
 /* End PBXBuildFile section */
 
@@ -115,12 +122,14 @@
 		654343463F1033D33F363D88 /* convolutional.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = convolutional.c; sourceTree = "<group>"; };
 		65A85E49C2D3CA01B4264045 /* bit.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bit.c; sourceTree = "<group>"; };
 		693EDF0715FEB5F2524DBA19 /* CimbarDecoderBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CimbarDecoderBridge.mm; sourceTree = "<group>"; };
+		6AA0E5054C007C7EF7DBE623 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		6D2979580FBD60DFFBD2463E /* WirehairTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WirehairTools.cpp; sourceTree = "<group>"; };
 		709C219115769E4978317DCE /* cimbar_c.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cimbar_c.cpp; sourceTree = "<group>"; };
 		718DC9772171E505F756EB03 /* CimbarApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CimbarApp-Info.plist"; sourceTree = "<group>"; };
 		7323F14AC88DA34E0603921A /* reed_solomon_streamTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = reed_solomon_streamTest.cpp; sourceTree = "<group>"; };
 		73D64C78D1A433D662777C47 /* SimpleCameraCalibration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleCameraCalibration.cpp; sourceTree = "<group>"; };
 		753FA8D206EAFAA13C4B1196 /* zstd_ddict.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstd_ddict.c; sourceTree = "<group>"; };
+		770C38BF482671B6408F6F1B /* cimbar_js.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = cimbar_js.html; sourceTree = "<group>"; };
 		77A9CA40959F37A4B719E3C4 /* EncoderRoundTripTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EncoderRoundTripTest.cpp; sourceTree = "<group>"; };
 		77E0C1F1ADD2190DA07969CE /* WirehairCodec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WirehairCodec.cpp; sourceTree = "<group>"; };
 		79D3ABA9FB4C290B90245040 /* threading.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = threading.c; sourceTree = "<group>"; };
@@ -131,6 +140,7 @@
 		8E4AB31D79A9330A72757E5B /* hist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hist.c; sourceTree = "<group>"; };
 		92202F64A76B7363C5105BAB /* debug.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
 		943269BBEAD53432D730A1CC /* history_buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = history_buffer.c; sourceTree = "<group>"; };
+		99CA0F723C06F2B79C9250EE /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		9C6D15D8BC21141178078610 /* encode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = encode.c; sourceTree = "<group>"; };
 		9F3A2B9818DCE7BCB4C568B7 /* fse_decompress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fse_decompress.c; sourceTree = "<group>"; };
 		A026F3CEA3453AF9D399B285 /* zstd_ldm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstd_ldm.c; sourceTree = "<group>"; };
@@ -140,19 +150,24 @@
 		A79B6A98EE6ADE151F16136A /* Decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
 		AD2F99D3777F406BBF749456 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		AF353FED6183C62C074D54B7 /* cimbar_c.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cimbar_c.h; sourceTree = "<group>"; };
+		B4B9BCD459914D93B78A8BAD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B94AA5A740F5357DD020AC55 /* null_stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = null_stream.h; path = src/lib/util/null_stream.h; sourceTree = "<group>"; };
 		BB4015CC431672D5E16A5E59 /* zstdmt_compress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstdmt_compress.c; sourceTree = "<group>"; };
 		BC17A3BEC422E542309D8193 /* FileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListView.swift; sourceTree = "<group>"; };
+		BCB30E39A86B3B3A1FA49A97 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
+		BF92BA858806F450152CDD77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C0240666C3F693ACEFEC64FD /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		C0D8FC9786E420CF25AE7CEF /* zstd_compress_literals.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstd_compress_literals.c; sourceTree = "<group>"; };
 		C2B4079A3E76BC6F57DACAE0 /* reed_solomon_stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reed_solomon_stream.h; sourceTree = "<group>"; };
 		C452E44BE99D78575EB8DE0E /* error_buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = error_buffer.c; sourceTree = "<group>"; };
 		C93EE97D406C4CF3C56195E6 /* metric.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = metric.c; sourceTree = "<group>"; };
 		CC457A8AA8EDA855C27E8D36 /* CimbEncoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CimbEncoder.cpp; sourceTree = "<group>"; };
+		CCB95D16BBD132B590384E61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD1F107537AFCD0609339E20 /* zstd_compress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstd_compress.c; sourceTree = "<group>"; };
 		CD8C9DA479E85C89F0487EE4 /* zstd_decompress_block.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstd_decompress_block.c; sourceTree = "<group>"; };
 		D5EA24E22C0D00137972D589 /* polynomial.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = polynomial.c; sourceTree = "<group>"; };
 		D7C09E830D02963BDA76C4D4 /* encode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = encode.c; sourceTree = "<group>"; };
+		DB3E42ABFAFE080BAAAC5001 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		DE7031AF3B61FE7A33ADE2A5 /* DecoderPlus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DecoderPlus.h; sourceTree = "<group>"; };
 		E107437455DFC2818EDF58B3 /* error_private.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = error_private.c; sourceTree = "<group>"; };
 		E14CEC6E7456055C1BF54867 /* fse_compress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fse_compress.c; sourceTree = "<group>"; };
@@ -167,6 +182,7 @@
 		F063636CE2D935C94C0AF365 /* CimbarDecoderBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CimbarDecoderBridge.h; sourceTree = "<group>"; };
 		F10C7F46380172A5FBE017F0 /* huf_decompress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = huf_decompress.c; sourceTree = "<group>"; };
 		F2370C0A8B98008B9E5FF1AC /* pool.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pool.c; sourceTree = "<group>"; };
+		F712226D198766BDFD2C22A7 /* libcimbar-MPL-2.0.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "libcimbar-MPL-2.0.txt"; sourceTree = "<group>"; };
 		F8ABB62C295E5396201101F2 /* zstd_compress_sequences.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zstd_compress_sequences.c; sourceTree = "<group>"; };
 		F937D3E156FBB0B022FBAFEB /* LensDrop.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LensDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F954714E2A8772B882F47B45 /* aligned_stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aligned_stream.h; sourceTree = "<group>"; };
@@ -281,6 +297,15 @@
 				360732374428308BCC27B734 /* common */,
 			);
 			name = common;
+			sourceTree = "<group>";
+		};
+		571DD0040C895E0BDBD94DA6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DDB2DB4D7767E0796CB6E29D /* Licenses */,
+				F7FF49DE4A355BAF87B824DF /* Sender */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		5FFF593FB756F730755FD60A /* decompress */ = {
@@ -401,14 +426,20 @@
 		ABF6ED7CEBA8960E5BBEA2D0 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				CCB95D16BBD132B590384E61 /* Assets.xcassets */,
 				AD2F99D3777F406BBF749456 /* CameraPreview.swift */,
 				718DC9772171E505F756EB03 /* CimbarApp-Info.plist */,
 				E2342DC88F43C1860A750A7F /* CimbarApp.swift */,
 				01703928A0AD49EB854CC504 /* CimbarSession.swift */,
 				BC17A3BEC422E542309D8193 /* FileListView.swift */,
+				99CA0F723C06F2B79C9250EE /* Localization.swift */,
+				BCB30E39A86B3B3A1FA49A97 /* PrivacyPolicyView.swift */,
 				5DDBF4ADF7BC58360AC46230 /* ScanView.swift */,
 				87415D9F428BAFDF4A63E20D /* SettingsView.swift */,
 				7F723B63BC31CAC8D4B19DED /* Bridge */,
+				D88A47FEFF83B42ACA73AB20 /* InfoPlist.strings */,
+				914A4F2825311C421B834818 /* Localizable.strings */,
+				571DD0040C895E0BDBD94DA6 /* Resources */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -469,6 +500,14 @@
 			path = src/lib/cimb_translator;
 			sourceTree = "<group>";
 		};
+		DDB2DB4D7767E0796CB6E29D /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				F712226D198766BDFD2C22A7 /* libcimbar-MPL-2.0.txt */,
+			);
+			path = Licenses;
+			sourceTree = "<group>";
+		};
 		EBCFB29A1033D4B1C3F020A3 /* zstd */ = {
 			isa = PBXGroup;
 			children = (
@@ -502,6 +541,14 @@
 			name = compress;
 			sourceTree = "<group>";
 		};
+		F7FF49DE4A355BAF87B824DF /* Sender */ = {
+			isa = PBXGroup;
+			children = (
+				770C38BF482671B6408F6F1B /* cimbar_js.html */,
+			);
+			path = Sender;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -510,6 +557,7 @@
 			buildConfigurationList = 334A9798FB98EF9A62869A66 /* Build configuration list for PBXNativeTarget "CimbarApp" */;
 			buildPhases = (
 				3F7EC897FCE15903D654ECBE /* Sources */,
+				6757CF7EA322F41191FCF9DB /* Resources */,
 				15169454DF3E3806B7EEBCB1 /* Frameworks */,
 			);
 			buildRules = (
@@ -564,6 +612,7 @@
 			knownRegions = (
 				Base,
 				en,
+				"zh-Hans",
 			);
 			mainGroup = C22FC3878A0A031C151415AB;
 			minimizedProjectReferenceProxies = 1;
@@ -578,6 +627,21 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		6757CF7EA322F41191FCF9DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB736CEA57D33A1023B59C2B /* Assets.xcassets in Resources */,
+				F906ADE453A1450D61CBB053 /* InfoPlist.strings in Resources */,
+				07203DC4A6D444FDBBBFE701 /* Localizable.strings in Resources */,
+				BA272589E77509561FE76BDB /* cimbar_js.html in Resources */,
+				6ECD8D914A64F3E8D96589E2 /* libcimbar-MPL-2.0.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3F7EC897FCE15903D654ECBE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -588,6 +652,8 @@
 				F50F4A4EDDE85B9EDFCD8C7D /* CimbarDecoderBridge.mm in Sources */,
 				051DCFB1F15746FA61B8A603 /* CimbarSession.swift in Sources */,
 				4D5CA2E0811499C43E07D4BA /* FileListView.swift in Sources */,
+				2208402EA7520120C20D4986 /* Localization.swift in Sources */,
+				3600E81AEF4D4A6BDA2F4C5C /* PrivacyPolicyView.swift in Sources */,
 				19809DB0E92AB36F507518FC /* ScanView.swift in Sources */,
 				4A828D061A6122C1C874F318 /* SettingsView.swift in Sources */,
 			);
@@ -665,6 +731,27 @@
 			targetProxy = C107DABBA7F3EDD38DF478F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		914A4F2825311C421B834818 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BF92BA858806F450152CDD77 /* en */,
+				6AA0E5054C007C7EF7DBE623 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		D88A47FEFF83B42ACA73AB20 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B4B9BCD459914D93B78A8BAD /* en */,
+				DB3E42ABFAFE080BAAAC5001 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		16C44F3CD511285EB5B99442 /* Debug */ = {
@@ -827,7 +914,7 @@
 					"-framework VideoToolbox",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.cimbar.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzx.lensdrop;
 				PRODUCT_NAME = LensDrop;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "ios/Bridge/CimbarApp-Bridging-Header.h";
@@ -871,7 +958,7 @@
 					"-framework VideoToolbox",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.cimbar.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zzx.lensdrop;
 				PRODUCT_NAME = LensDrop;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "ios/Bridge/CimbarApp-Bridging-Header.h";
