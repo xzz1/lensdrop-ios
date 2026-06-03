@@ -10,7 +10,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    TARGETED_DEVICE_FAMILY: "1,2"
+    TARGETED_DEVICE_FAMILY: "1"
     ENABLE_HARDENED_RUNTIME: YES
     CODE_SIGN_STYLE: Automatic
 
@@ -129,6 +129,7 @@ targets:
         CLANG_CXX_LIBRARY: "libc++"
         PRODUCT_BUNDLE_IDENTIFIER: com.zzx.lensdrop
         PRODUCT_NAME: LensDrop
+        TARGETED_DEVICE_FAMILY: "1"
         SWIFT_OBJC_INTEROP_MODE: "objcxx"
         SWIFT_OBJC_BRIDGING_HEADER: "ios/Bridge/CimbarApp-Bridging-Header.h"
         HEADER_SEARCH_PATHS:
