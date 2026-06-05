@@ -60,14 +60,20 @@
     uint8_t *outData = NULL;
     size_t   outLen  = 0;
     float    progress = 0.0f;
+    cimbar_decoder_frame_stats_t stats = {0};
 
     // Zero-copy: pass raw pointer to C++. Lock held during decode, no 8MB clone.
     int rc = cimbar_decoder_process_frame(_decoder, addr, (unsigned)w, (unsigned)h, (unsigned)bpr,
-                                           &outData, &outLen, &progress);
+                                           &outData, &outLen, &progress, &stats);
     CVPixelBufferUnlockBaseAddress(pb, kCVPixelBufferLock_ReadOnly);
 
     CimbarDecodeResult *result = [[CimbarDecodeResult alloc] init];
     result.progress = progress;
+    result.processedFrames = stats.processed_frames;
+    result.extractedFrames = stats.extracted_frames;
+    result.decodedFrames = stats.decoded_frames;
+    result.decodedBytes = stats.decoded_bytes;
+    result.frameMilliseconds = stats.frame_ms;
 
     if (rc == 2 && outData && outLen > 0) {
         result.success  = YES;

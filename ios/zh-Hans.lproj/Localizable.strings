@@ -38,7 +38,8 @@
 "scan.start" = "开始扫描";
 "scan.decoding" = "正在解码";
 "scan.complete.percent" = "已完成 %d%%";
-"scan.frame.progress" = "%d 个数据块 · %d 帧";
+"scan.frame.progress" = "%d 帧有效解码 · %d 帧成功提取";
+"scan.decode.stats" = "%@ 传输数据 · 平均 %.0f ms · %d 帧处理中";
 "scan.file.received" = "文件已接收";
 "scan.save" = "保存到文件";
 "scan.again" = "再次扫描";

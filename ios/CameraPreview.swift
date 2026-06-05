@@ -84,7 +84,9 @@ struct CameraPreview: UIViewRepresentable {
             }
             captureSession.addOutput(output)
 
-            if captureSession.canSetSessionPreset(.hd1920x1080) {
+            if captureSession.canSetSessionPreset(.hd1280x720) {
+                captureSession.sessionPreset = .hd1280x720
+            } else if captureSession.canSetSessionPreset(.hd1920x1080) {
                 captureSession.sessionPreset = .hd1920x1080
             }
 

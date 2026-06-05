@@ -10,6 +10,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) float progress;
 @property (nonatomic, strong, nullable) NSData *fileData;
 @property (nonatomic, copy,   nullable) NSString *fileName;
+@property (nonatomic, assign) unsigned long long processedFrames;
+@property (nonatomic, assign) unsigned long long extractedFrames;
+@property (nonatomic, assign) unsigned long long decodedFrames;
+@property (nonatomic, assign) unsigned long long decodedBytes;
+@property (nonatomic, assign) double frameMilliseconds;
 @end
 
 /// Objective-C++ bridge that wraps the libcimbar C++ decoding pipeline.

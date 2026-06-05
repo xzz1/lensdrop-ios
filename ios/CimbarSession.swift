@@ -8,7 +8,7 @@ import Combine
 enum DecodeState: Equatable {
     case idle                        // camera off, waiting for user
     case scanning                    // camera on, looking for code
-    case decoding(progress: Float, receivedFrames: Int, totalExtracted: Int)
+    case decoding(progress: Float, metrics: DecodeMetrics)
     case complete(fileName: String, fileSize: String, data: Data)
     case error(message: String)
 
@@ -16,14 +16,31 @@ enum DecodeState: Equatable {
         switch (lhs, rhs) {
         case (.idle, .idle): return true
         case (.scanning, .scanning): return true
-        case (.decoding(let a, let b, let c), .decoding(let x, let y, let z)):
-            return a == x && b == y && c == z
+        case (.decoding(let a, let b), .decoding(let x, let y)):
+            return a == x && b == y
         case (.complete(let a, let b, _), .complete(let x, let y, _)):
             return a == x && b == y
         case (.error(let a), .error(let b)):
             return a == b
         default: return false
         }
+    }
+}
+
+struct DecodeMetrics: Equatable {
+    var processedFrames: Int = 0
+    var extractedFrames: Int = 0
+    var decodedFrames: Int = 0
+    var decodedBytes: UInt64 = 0
+    var averageFrameMilliseconds: Double = 0
+    var lastFrameMilliseconds: Double = 0
+    var activeFrames: Int = 0
+
+    var decodedByteString: String {
+        ByteCountFormatter.string(
+            fromByteCount: Int64(min(decodedBytes, UInt64(Int64.max))),
+            countStyle: .file
+        )
     }
 }
 
@@ -40,12 +57,14 @@ final class CimbarSession: ObservableObject {
     @Published var framesExtracted: Int = 0
 
     nonisolated(unsafe) private let bridge: CimbarDecoderBridge
-    private let decodeQueue = DispatchQueue(label: "cimbar.decode", qos: .userInitiated)
-    private var framesReceived: Int = 0
+    private let decodeQueue = DispatchQueue(label: "cimbar.decode", qos: .userInitiated, attributes: .concurrent)
     private var startTime: Date?
     private var sessionGeneration: UInt = 0
-    private var isProcessing = false
-    private var frameSkipCounter: UInt8 = 0
+    private var inFlightFrames = 0
+    private let maxInFlightFrames = min(max(ProcessInfo.processInfo.activeProcessorCount / 2, 1), 3)
+    private var lastMetrics = DecodeMetrics()
+    private var lastUIUpdate = Date.distantPast
+    private let uiUpdateInterval: TimeInterval = 0.15
 
     nonisolated init() {
         bridge = CimbarDecoderBridge(
@@ -61,26 +80,28 @@ final class CimbarSession: ObservableObject {
 
     func startScanning() {
         sessionGeneration &+= 1
-        decodeQueue.async { [weak self] in
+        decodeQueue.async(flags: .barrier) { [weak self] in
             guard let self else { return }
             self.bridge.reset()
         }
         state = .scanning
         framesExtracted = 0
-        framesReceived = 0
         startTime = nil
+        lastMetrics = DecodeMetrics()
+        lastUIUpdate = .distantPast
     }
 
     func stopScanning() {
         sessionGeneration &+= 1
         state = .idle
-        decodeQueue.async { [weak self] in
+        decodeQueue.async(flags: .barrier) { [weak self] in
             guard let self else { return }
             self.bridge.reset()
         }
         framesExtracted = 0
-        framesReceived = 0
         startTime = nil
+        lastMetrics = DecodeMetrics()
+        lastUIUpdate = .distantPast
     }
 
     func stopActiveScanning() {
@@ -102,13 +123,11 @@ final class CimbarSession: ObservableObject {
 
     private func enqueueFrame(_ sampleBuffer: CMSampleBuffer) {
         guard isActivelyScanning else { return }
-        if isProcessing { return }
-        frameSkipCounter ^= 1
-        if frameSkipCounter == 0 { return }
+        guard inFlightFrames < maxInFlightFrames else { return }
 
         let generation = sessionGeneration
         let frame = PendingFrame(sampleBuffer: sampleBuffer)
-        isProcessing = true
+        inFlightFrames += 1
         decodeQueue.async { [weak self] in
             guard let self else { return }
 
@@ -116,12 +135,12 @@ final class CimbarSession: ObservableObject {
 
             Task { @MainActor [weak self] in
                 guard let self else { return }
-                self.isProcessing = false
+                self.inFlightFrames = max(0, self.inFlightFrames - 1)
                 guard generation == self.sessionGeneration else { return }
                 guard self.isActivelyScanning else { return }
                 guard let result else { return }
 
-                self.framesExtracted += 1
+                self.framesExtracted = Int(result.extractedFrames)
 
                 if result.success, let data = result.fileData {
                     let name = result.fileName ?? "received.bin"
@@ -130,15 +149,50 @@ final class CimbarSession: ObservableObject {
                     self.state = .complete(fileName: name, fileSize: size, data: data)
                 } else {
                     if self.startTime == nil { self.startTime = Date() }
-                    self.framesReceived += 1
-                    self.state = .decoding(
-                        progress: result.progress,
-                        receivedFrames: self.framesReceived,
-                        totalExtracted: self.framesExtracted
-                    )
+                    self.updateDecodingState(from: result)
                 }
             }
         }
+    }
+
+    private func updateDecodingState(from result: CimbarDecodeResult) {
+        let now = Date()
+        let isFirstDecodingUpdate: Bool
+        if case .scanning = state {
+            isFirstDecodingUpdate = true
+        } else {
+            isFirstDecodingUpdate = false
+        }
+        let shouldPublish = now.timeIntervalSince(lastUIUpdate) >= uiUpdateInterval
+            || result.progress >= 1.0
+            || isFirstDecodingUpdate
+            || result.decodedFrames != UInt64(lastMetrics.decodedFrames)
+
+        lastMetrics = DecodeMetrics(
+            processedFrames: Int(result.processedFrames),
+            extractedFrames: Int(result.extractedFrames),
+            decodedFrames: Int(result.decodedFrames),
+            decodedBytes: result.decodedBytes,
+            averageFrameMilliseconds: rollingAverage(
+                previousAverage: lastMetrics.averageFrameMilliseconds,
+                previousCount: max(lastMetrics.extractedFrames, 0),
+                nextValue: result.frameMilliseconds
+            ),
+            lastFrameMilliseconds: result.frameMilliseconds,
+            activeFrames: inFlightFrames
+        )
+
+        guard shouldPublish else { return }
+        lastUIUpdate = now
+        state = .decoding(progress: result.progress, metrics: lastMetrics)
+    }
+
+    private func rollingAverage(previousAverage: Double,
+                                previousCount: Int,
+                                nextValue: Double) -> Double {
+        guard nextValue > 0 else { return previousAverage }
+        guard previousCount > 0 else { return nextValue }
+        return ((previousAverage * Double(previousCount)) + nextValue) / Double(previousCount + 1)
     }
 
     private var isActivelyScanning: Bool {

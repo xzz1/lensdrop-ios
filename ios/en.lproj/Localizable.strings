@@ -38,7 +38,8 @@
 "scan.start" = "Start Scanning";
 "scan.decoding" = "Decoding";
 "scan.complete.percent" = "%d%% complete";
-"scan.frame.progress" = "%d chunks · %d frames";
+"scan.frame.progress" = "%d decoded frames · %d extracted frames";
+"scan.decode.stats" = "%@ wire · %.0f ms avg · %d active";
 "scan.file.received" = "File Received";
 "scan.save" = "Save to Files";
 "scan.again" = "Scan Again";

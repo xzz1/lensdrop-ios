@@ -30,10 +30,9 @@ struct ScanView: View {
             case .scanning:
                 EmptyView()  // camera is live, user is aiming
 
-            case .decoding(let progress, let received, let total):
+            case .decoding(let progress, let metrics):
                 DecodingHUD(progress: progress,
-                            receivedFrames: received,
-                            totalExtracted: total)
+                            metrics: metrics)
 
             case .complete(let fileName, let fileSize, let data):
                 CompleteSheet(fileName: fileName,
@@ -64,7 +63,7 @@ private struct BottomBar: View {
         HStack {
             Spacer()
 
-            if case .decoding(let progress, _, _) = session.state, progress > 0 {
+            if case .decoding(let progress, _) = session.state, progress > 0 {
                 VStack(spacing: 2) {
                     ProgressView(value: Double(progress))
                         .tint(.green)
@@ -134,8 +133,7 @@ private struct IdleOverlay: View {
 
 private struct DecodingHUD: View {
     let progress: Float
-    let receivedFrames: Int
-    let totalExtracted: Int
+    let metrics: DecodeMetrics
     @Environment(\.appLanguage) private var language
 
     var body: some View {
@@ -153,9 +151,18 @@ private struct DecodingHUD: View {
                 .tint(.green)
                 .padding(.horizontal, 60)
 
-            Text(language.format("scan.frame.progress", receivedFrames, totalExtracted))
+            Text(language.format("scan.frame.progress",
+                                 metrics.decodedFrames,
+                                 metrics.extractedFrames))
                 .font(.caption2.monospacedDigit())
                 .foregroundColor(.white.opacity(0.6))
+
+            Text(language.format("scan.decode.stats",
+                                 metrics.decodedByteString,
+                                 metrics.averageFrameMilliseconds,
+                                 metrics.activeFrames))
+                .font(.caption2.monospacedDigit())
+                .foregroundColor(.white.opacity(0.45))
         }
         .padding(24)
         .background(.ultraThinMaterial)
