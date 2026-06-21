@@ -1,114 +1,88 @@
 <div align="center">
-  <img src="ios/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png" alt="LensDrop app icon" width="128">
+  <img src="ios/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png" alt="LensDrop app icon" width="120">
 
-  # LensDrop for iOS
+  # LensDrop
 
   **English** | [简体中文](README.zh-CN.md)
 
-  Receive files optically from animated color icon matrix barcodes, with no network transfer required.
+  iOS receiver for files sent as animated `cimbar` codes.
 
-  [![TestFlight](https://img.shields.io/badge/TestFlight-Join_Beta-0D96F6?style=for-the-badge&logo=appstore)](https://testflight.apple.com/join/8mEjTABF)
+  [TestFlight public beta](https://testflight.apple.com/join/8mEjTABF)
 </div>
 
-> LensDrop is currently in public beta. Feedback and bug reports are welcome through [GitHub Issues](https://github.com/xzz1/lensdrop-ios/issues).
+LensDrop scans a computer screen and rebuilds the file on the phone. The sender can be [cimbar.org](https://cimbar.org), the official `cimbar_js.html`, or the offline sender HTML exported from LensDrop settings.
 
-LensDrop is an iPhone and iPad receiver powered by [libcimbar](https://github.com/sz3/libcimbar). A sender page on your computer displays a file as animated `cimbar` codes; LensDrop scans the screen through the camera and reconstructs the file locally on your device. It is compatible with the `cimbar.org` sender and the Android [CameraFileCopy (cfc)](https://github.com/sz3/cfc) ecosystem.
+The transfer is optical: the file is shown as animated color matrix codes, and the camera reads those codes. LensDrop does not upload the received file or camera frames.
 
-## Features
+## Status
 
-- **Offline optical reception** — receive files through the camera, no network connection required.
-- **Save to Files** — export completed files using the system file picker.
-- **Bundled offline sender** — export a self-contained `cimbar_js.html` from Settings for air-gapped usage.
+This app is in public beta. If something fails, please open a [GitHub issue](https://github.com/xzz1/lensdrop-ios/issues) with:
 
-## How It Works
+- device model and iOS version
+- sender used: `cimbar.org`, bundled HTML, or another build
+- file size and file type
+- what the scan screen showed, especially decoded/extracted frame counts
 
-1. On a computer, open the sender. You can use the sender HTML exported by LensDrop, download the latest official sender from the app, or open [cimbar.org](https://cimbar.org).
-2. Choose a file on the sender page to display it as animated cimbar codes.
-3. On your iPhone or iPad, launch LensDrop and tap **Start Scanning**.
-4. Point the camera at the code on the computer screen.
-5. When reception completes, tap **Save to Files** and choose a destination.
+## Use It
 
-No transferred file is sent by LensDrop over a network. Camera frames are processed locally for decoding; see the [Privacy Policy](PRIVACY.md) for details.
+1. Install the beta from [TestFlight](https://testflight.apple.com/join/8mEjTABF), or build from source.
+2. On a computer, open [cimbar.org](https://cimbar.org) or an offline `cimbar_js.html` sender.
+3. Choose a file in the sender.
+4. In LensDrop, tap **Start Scanning** and point the camera at the screen.
+5. When the file is complete, save it with **Save to Files**.
 
-## Public Beta
+For offline use, open Settings in LensDrop and export the bundled sender HTML. That file can be opened directly in a desktop browser.
 
-The latest public testing build is available through TestFlight:
+## What Is Here
 
-**[Download LensDrop Beta on TestFlight](https://testflight.apple.com/join/8mEjTABF)**
+- SwiftUI iOS app for receiving `cimbar` transfers.
+- Objective-C++ bridge around `libcimbar`.
+- Bundled official `libcimbar` sender HTML.
+- English and Simplified Chinese UI.
+- Local privacy policy and third-party license notice.
 
-TestFlight builds may change while the app is being tested. Please report reproducible issues, device details, and any problematic sender/receiver workflow through [GitHub Issues](https://github.com/xzz1/lensdrop-ios/issues).
+## Build
 
-## Build from Source
+Requirements:
 
-### Requirements
-
-- Xcode 15 or later with an iOS 16 or later SDK.
-- An iPhone or iPad running iOS 16 or later.
-- [xcodegen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`).
-- [opencv2.framework](https://github.com/opencv/opencv/releases) for iOS, placed at the project root.
-- Git with submodule support.
-
-### Build
+- Xcode 15 or newer
+- iOS 16 deployment target
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen)
+- OpenCV iOS framework, placed at `opencv2.framework` in the repo root
+- Git submodules
 
 ```bash
-# Clone with the libcimbar submodule.
 git clone --recurse-submodules https://github.com/xzz1/lensdrop-ios.git
 cd lensdrop-ios
 
-# Download the OpenCV iOS framework and place opencv2.framework at the project root.
+# Download OpenCV for iOS and place opencv2.framework here.
 # https://github.com/opencv/opencv/releases
 
-# Generate the Xcode project after changes to project.yml.
 ./scripts/generate-xcode.sh
-
-# Open the generated project and build for a device.
 open CimbarApp.xcodeproj
 ```
 
-## Project Structure
+Build and run on a real device. The camera path is the important part; the simulator is not useful for testing reception.
+
+## Layout
 
 ```text
-├── CimbarApp.xcodeproj       # Generated through XcodeGen
-├── project.yml               # XcodeGen specification
-├── core/                     # App-owned C API wrapper around libcimbar
-├── ios/
-│   ├── Assets.xcassets/      # LensDrop App Icon
-│   ├── Bridge/               # Objective-C++ bridging layer
-│   ├── Resources/            # Bundled sender HTML and third-party license
-│   ├── en.lproj/             # English UI and Info.plist localizations
-│   ├── zh-Hans.lproj/        # Simplified Chinese localizations
-│   ├── CimbarApp.swift       # App shell, tabs, lifecycle behavior
-│   ├── CimbarSession.swift   # Scan/decode session state
-│   ├── Localization.swift    # In-app language selection support
-│   ├── PrivacyPolicyView.swift
-│   ├── ScanView.swift
-│   └── SettingsView.swift
-├── libcimbar/                # sz3/libcimbar git submodule
-├── PRIVACY.md                # Public privacy policy (English / 简体中文)
-├── scripts/generate-xcode.sh
-└── opencv2.framework/        # Downloaded separately, not committed
-```
-
-## Architecture
-
-```text
-SwiftUI → CimbarSession → CimbarDecoderBridge (Objective-C++) → cimbar_c (C API)
-                                                              └── Decoder (C++)
-                                                                   ├── Extraction and perspective transform
-                                                                   ├── Symbol and color decoding
-                                                                   ├── Reed-Solomon error correction
-                                                                   ├── Fountain code reassembly
-                                                                   └── zstd decompression
+core/                  C API wrapper around libcimbar
+ios/                   SwiftUI app and Objective-C++ bridge
+ios/Resources/         bundled sender HTML and license files
+libcimbar/             upstream libcimbar submodule
+project.yml            XcodeGen project definition
+scripts/generate-xcode.sh
 ```
 
 ## Privacy
 
-LensDrop is designed for offline reception: it does not collect, sell, or upload personal information. Camera input is used locally for decoding, and completed files are written only when you choose a destination through the system file interface.
+LensDrop works locally. It uses the camera to decode the screen and writes a received file only after you choose a destination through the system file picker.
 
-Read the full bilingual policy in [PRIVACY.md](PRIVACY.md).
+See [PRIVACY.md](PRIVACY.md) for the full policy.
 
-## Credits and License
+## Credits
 
-LensDrop is powered by [libcimbar](https://github.com/sz3/libcimbar) by Stephen Zhang ([@sz3](https://github.com/sz3)) and inspired by the Android [cfc](https://github.com/sz3/cfc) decoder.
+LensDrop uses [libcimbar](https://github.com/sz3/libcimbar) by Stephen Zhang and follows the same file-transfer format as the Android [cfc](https://github.com/sz3/cfc) app.
 
-The bundled official `libcimbar` sender and `libcimbar` code are distributed under the Mozilla Public License 2.0; the bundled notice is included in `ios/Resources/Licenses/libcimbar-MPL-2.0.txt`. Other bundled dependencies retain their respective licenses.
+The bundled `libcimbar` sender and `libcimbar` code are distributed under MPL 2.0. The bundled notice is at `ios/Resources/Licenses/libcimbar-MPL-2.0.txt`.
