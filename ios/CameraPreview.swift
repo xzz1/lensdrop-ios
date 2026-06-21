@@ -12,6 +12,8 @@ struct CameraPreview: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: CameraPreviewView, context: Context) {
+        context.coordinator.updateOrientation(for: uiView)
+
         let isScanning: Bool = {
             switch session.state {
             case .idle, .complete: return false
@@ -36,6 +38,7 @@ struct CameraPreview: UIViewRepresentable {
         private let captureSession = AVCaptureSession()
         private var isRunning = false
         private var device: AVCaptureDevice?
+        private var videoOutput: AVCaptureVideoDataOutput?
 
         init(session: CimbarSession) {
             self.session = session
@@ -83,11 +86,12 @@ struct CameraPreview: UIViewRepresentable {
                 return
             }
             captureSession.addOutput(output)
+            self.videoOutput = output
 
-            if captureSession.canSetSessionPreset(.hd1280x720) {
-                captureSession.sessionPreset = .hd1280x720
-            } else if captureSession.canSetSessionPreset(.hd1920x1080) {
+            if captureSession.canSetSessionPreset(.hd1920x1080) {
                 captureSession.sessionPreset = .hd1920x1080
+            } else if captureSession.canSetSessionPreset(.hd1280x720) {
+                captureSession.sessionPreset = .hd1280x720
             }
 
             captureSession.commitConfiguration()
@@ -109,12 +113,11 @@ struct CameraPreview: UIViewRepresentable {
 
         // MARK: Tap to Focus
 
-        func focus(at point: CGPoint, in view: UIView) {
+        func focus(at point: CGPoint, in view: CameraPreviewView) {
             guard let device = self.device else { return }
             try? device.lockForConfiguration()
 
-            let focusPoint = CGPoint(x: point.y / view.bounds.height,
-                                     y: 1.0 - point.x / view.bounds.width)
+            let focusPoint = view.previewLayer.captureDevicePointConverted(fromLayerPoint: point)
             if device.isFocusPointOfInterestSupported {
                 device.focusPointOfInterest = focusPoint
                 device.focusMode = .autoFocus
@@ -140,6 +143,39 @@ struct CameraPreview: UIViewRepresentable {
         func setPreviewLayer(_ layer: AVCaptureVideoPreviewLayer) {
             layer.session = captureSession
             layer.videoGravity = .resizeAspectFill
+        }
+
+        func updateOrientation(for view: CameraPreviewView) {
+            guard let orientation = currentVideoOrientation(for: view) else { return }
+            setVideoOrientation(orientation, on: view.previewLayer.connection)
+            setVideoOrientation(orientation, on: videoOutput?.connection(with: .video))
+        }
+
+        private func currentVideoOrientation(for view: CameraPreviewView) -> AVCaptureVideoOrientation? {
+            guard let interfaceOrientation = view.window?.windowScene?.interfaceOrientation else {
+                return nil
+            }
+
+            switch interfaceOrientation {
+            case .portrait:
+                return .portrait
+            case .portraitUpsideDown:
+                return .portraitUpsideDown
+            case .landscapeLeft:
+                return .landscapeLeft
+            case .landscapeRight:
+                return .landscapeRight
+            case .unknown:
+                return nil
+            @unknown default:
+                return nil
+            }
+        }
+
+        private func setVideoOrientation(_ orientation: AVCaptureVideoOrientation,
+                                         on connection: AVCaptureConnection?) {
+            guard let connection, connection.isVideoOrientationSupported else { return }
+            connection.videoOrientation = orientation
         }
     }
 }
@@ -175,6 +211,11 @@ final class CameraPreviewView: UIView {
         super.didMoveToWindow()
         guard let coordinator = delegate else { return }
         coordinator.setPreviewLayer(previewLayer)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        delegate?.updateOrientation(for: self)
     }
 
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {

@@ -102,8 +102,11 @@ int cimbar_decoder_process_frame(cimbar_decoder_t* dec,
     auto begin = std::chrono::steady_clock::now();
     uint64_t decodedBytes = 0;
 
-    cv::Mat img((int)h, (int)w, CV_8UC4, (void*)bgra_data, (int)stride);
-    if (img.empty()) return 0;
+    cv::Mat bgra((int)h, (int)w, CV_8UC4, (void*)bgra_data, (int)stride);
+    if (bgra.empty()) return 0;
+
+    cv::Mat img;
+    cv::cvtColor(bgra, img, cv::COLOR_BGRA2RGB);
 
     {
         std::lock_guard<std::mutex> lock(dec->mutex);
